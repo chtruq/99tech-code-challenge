@@ -1,0 +1,17 @@
+Type Safety Issues:
+  `blockchain` parameter in `getPriority` is typed as `any`, which defeats TypeScript's type safety
+ + Missing proper interface for the blockchain type (should be a union type of allowed values)
+Performance Issues:
+  `sortedBalances` filter logic is incorrect and inefficient:
+ + Uses `lhsPriority` variable that's not defined
+ The filter condition is confusing and possibly incorrect
+ Performs priority calculation twice (in filter and sort)
+Memoization Issues:
+ `useMemo` dependency array includes `prices` but it's not used in the calculation
+ No memoization for `formattedBalances` and `rows` which are recreated on every render
+Array Operation Issues:
+ Multiple array transformations (filter, sort, map) could be combined
+ Using index as key in the map function is an anti-pattern
+Code Structure Issues:
+ `getPriority` function could be moved outside component or memoized
+ Mixing formatting logic with business logic
